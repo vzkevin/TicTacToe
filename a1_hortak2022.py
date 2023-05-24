@@ -47,7 +47,7 @@ class SmartComputerPlayer(Player):
             square = self.minimax(game, self.letter)["position"]
         return square
 
-    def minimax(self, state, player):
+    def minimax(self, state, player, alpha=-math.inf, beta=math.inf):
         max_player = self.letter
         other_player = "O" if player == "X" else "X"
 
@@ -68,7 +68,7 @@ class SmartComputerPlayer(Player):
 
         for possible_move in state.available_moves():
             state.make_move(possible_move, player)
-            sim_score = self.minimax(state, other_player)
+            sim_score = self.minimax(state, other_player, alpha, beta)
             state.board[possible_move] = " "
             state.current_winner = None
             sim_score["position"] = possible_move
@@ -76,9 +76,15 @@ class SmartComputerPlayer(Player):
             if player == max_player:
                 if sim_score["score"] > best["score"]:
                     best = sim_score
+                alpha = max(alpha, sim_score["score"])
+                if beta <= alpha:
+                    break
             else:
                 if sim_score["score"] < best["score"]:
                     best = sim_score
+                beta = min(beta, sim_score["score"])
+                if beta <= alpha:
+                    break
         return best
 
 
