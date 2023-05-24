@@ -165,7 +165,19 @@ def play(game, x_player, o_player, print_game=True):
 
 
 if __name__ == "__main__":
-    x_player = SmartComputerPlayer("X")
-    o_player = HumanPlayer("O")
-    t = TicTacToe()
-    play(t, x_player, o_player, print_game=True)
+    print(
+        "This Python script is a console-based game of Tic Tac Toe that includes a smart computer player utilizing a minimax algorithm."
+    )
+    print(
+        "The game allows a human player to compete against the computer, taking turns until there's a winner or all spaces are filled indicating a tie."
+    )
+
+    while True:  # Keeps the game going until the player decides to quit.
+        o_player = SmartComputerPlayer("O")
+        x_player = HumanPlayer("X")
+        t = TicTacToe()
+        play(t, x_player, o_player, print_game=True)
+
+        play_again = input("Would you like to play again? (Yes/No) ")
+        if play_again.lower() != "yes":
+            break
